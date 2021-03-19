@@ -11,8 +11,6 @@ public class User extends Person {
     }
 
     // getters and setters
-    public void setFullName(String fullName) { this.fullName = fullName; }
-
     public String getFullName() { return fullName; }
     public List<Book> getCheckouts() { return checkouts; }
 }

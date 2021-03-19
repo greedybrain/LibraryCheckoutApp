@@ -9,7 +9,7 @@ public class Main {
         System.out.print("Hi, what's your name: ");
         var willis = new User(scanner.nextLine());
         var librarian = new Librarian("Mary Campbell");
-        librarian.handleCheckoutFor(willis);
+        librarian.handleCheckoutFor(willis, librarian);
     }
 }
 

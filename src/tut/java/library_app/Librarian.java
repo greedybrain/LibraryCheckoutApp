@@ -9,7 +9,7 @@ public class Librarian extends Person {
 
     public Librarian(String fullName) { super(fullName); }
 
-    public void handleCheckoutFor(User user) {
+    public void handleCheckoutFor(User user, Librarian librarian) {
         Scanner scanner1 = new Scanner(System.in);
         while(true) {
             Inventory.showOptions();
@@ -20,7 +20,6 @@ public class Librarian extends Person {
             }
 
             if (user.getCheckouts().contains(books.get(bookNumber - 1))) {
-                // hello
                 System.out.println("You already checked that book out, try another");
                 continue;
             }
@@ -30,7 +29,8 @@ public class Librarian extends Person {
             }
             if (canCheckoutNewBook(user)) continue;
             else {
-                displayOfTransactionInfo(user);
+                var receipt = new Receipt();
+                receipt.displayOfTransactionInfo(user, librarian);
                 break;
             }
         }
@@ -48,16 +48,5 @@ public class Librarian extends Person {
             System.out.println();
         }
         return false;
-    }
-
-    private static void displayOfTransactionInfo(User user) {
-        var userBooks = user.getCheckouts();
-        String bookOrBooks = (userBooks.size() == 0 || userBooks.size() > 1) ? "books" : "book";
-        System.out.printf("%s checked out %d %s %n", user.getFullName(), userBooks.size(), bookOrBooks);
-        System.out.println("============================");
-        for (int i = 0; i < userBooks.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, userBooks.get(i).getTitle());
-        }
-        System.out.println();
     }
 }
