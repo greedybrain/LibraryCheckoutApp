@@ -20,6 +20,7 @@ public class Librarian extends Person {
             }
 
             if (user.getCheckouts().contains(books.get(bookNumber - 1))) {
+                // hello
                 System.out.println("You already checked that book out, try another");
                 continue;
             }
