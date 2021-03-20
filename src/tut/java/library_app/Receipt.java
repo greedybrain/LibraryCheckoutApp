@@ -2,12 +2,15 @@ package tut.java.library_app;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Receipt {
 
-    public void displayOfTransactionInfo(User user, Librarian librarian) {
+    public void displayOfTransactionInfo(User user, Librarian librarian) { formatTransactionInfo(user, librarian); }
+
+    private void formatTransactionInfo(User user, Librarian librarian) {
         var userBooks = user.getCheckouts();
-        String bookOrBooks = (userBooks.size() == 0 || userBooks.size() > 1) ? "books" : "book";
+        var bookOrBooks = (userBooks.size() != 1) ? "books" : "book";
         System.out.printf("%s checked out %d %s %n", user.getFullName(), userBooks.size(), bookOrBooks);
         System.out.println("============================");
         for (int i = 0; i < userBooks.size(); i++) {
@@ -23,8 +26,7 @@ public class Receipt {
         LocalDateTime dateObj = LocalDateTime.now();
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss");
 
-        String formattedDate = dateObj.format(dateFormat);
-        return formattedDate;
+        return dateObj.format(dateFormat);
     }
 
 }
