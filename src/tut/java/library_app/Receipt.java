@@ -11,10 +11,11 @@ public class Receipt {
         System.out.printf("%s checked out %d %s %n", user.getFullName(), userBooks.size(), bookOrBooks);
         System.out.println("============================");
         for (int i = 0; i < userBooks.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, userBooks.get(i).getTitle());
+            var book = userBooks.get(i);
+            System.out.printf("%d. %s, by %s%n", i + 1, book.getTitle(), book.getAuthor());
         }
         System.out.println();
-        System.out.printf("Signed off by: %s%n", librarian.fullName);
+        System.out.printf("Signed out by: %s%n", librarian.fullName);
         System.out.printf("Time: %s%n", getDate());
     }
 
