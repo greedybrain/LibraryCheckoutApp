@@ -1,22 +1,21 @@
 package tut.java.library_app;
 
 public class Book {
-    private String title;
-    private String author;
-    private String ISBN;
-    private String summary;
+    private final String TITLE;
+    private final String AUTHOR;
+    private final String ISBN;
+    private final String SUMMARY;
 
     public Book(String title, String author, String ISBN, String summary) {
-        this.title = title;
-        this.author = author;
+        this.TITLE = title;
+        this.AUTHOR = author;
         this.ISBN = ISBN;
-        this.summary = summary;
-
+        this.SUMMARY = summary;
     }
 
     // getters below
-    public String getTitle() { return title; }
-    public String getSummary() { return summary; }
-    public String getAuthor() { return author; }
+    public String getTitle() { return TITLE; }
+    public String getSummary() { return SUMMARY; }
+    public String getAuthor() { return AUTHOR; }
     public String getISBN() { return ISBN; }
 }
