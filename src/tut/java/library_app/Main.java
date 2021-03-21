@@ -11,7 +11,7 @@ public class Main {
         var librarian = new Librarian("Mary Campbell");
         var receipt = new Receipt();
 
-        librarian.handleCheckoutFor(willis);
+        librarian.handleCheckout(willis);
         receipt.displayOfTransactionInfo(willis, librarian); // everyone involved in transaction
     }
 }

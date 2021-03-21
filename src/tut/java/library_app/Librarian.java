@@ -9,15 +9,15 @@ public class Librarian extends Person {
 
     public Librarian(String fullName) { super(fullName); }
 
-    public void handleCheckoutFor(User user) {
+    public void handleCheckout(User user) {
         Scanner scanner = new Scanner(System.in);
 
         while(true) {
-            if (user.getCheckouts().size() > 0) handleCheckInFor(user);
+            if (user.getCheckouts().size() > 0) handleCheckIn(user);
             Inventory.showOptions();
 
             var selection = scanner.nextInt();
-            if (!isValidSelection(selection)) continue;
+            if (isValidSelection(selection)) continue;
 
             var userCheckouts = user.getCheckouts();
             if (userCheckouts.contains(BOOKS.get(selection - 1))) {
@@ -27,13 +27,13 @@ public class Librarian extends Person {
             else {
                 var thisBook = BOOKS.get(--selection);
                 userCheckouts.add(thisBook);
-                alertNewBookAddedThenDisplayCheckoutCart(thisBook, userCheckouts);
+                alertNewBookAddedThenDisplayCheckoutList(thisBook, userCheckouts);
             }
             if (!canCheckoutNewBook(user)) break;
         }
     }
 
-    public static void handleCheckInFor(User user) {
+    public void handleCheckIn(User user) {
         Scanner scanner1 = new Scanner(System.in);
         Scanner scanner2 = new Scanner(System.in);
 
@@ -47,17 +47,17 @@ public class Librarian extends Person {
                 }
                 System.out.println("Which book are you checking in? ");
                 var selection = scanner2.nextInt();
-                if (!isValidSelection(selection)) continue;
+                if (isValidSelection(selection)) continue;
 
                 var thisBook = userCheckouts.get(--selection);
                 userCheckouts.remove(thisBook);
-                alertBookRemovedThenDisplayCheckoutCart(thisBook, userCheckouts);
+                alertBookRemovedThenDisplayCheckoutList(thisBook, userCheckouts);
             }
             else break;
         }
     }
 
-    private static boolean canCheckoutNewBook(User user) {
+    private boolean canCheckoutNewBook(User user) {
         Scanner scanner = new Scanner(System.in);
         if (user.getCheckouts().size() != 5) {
             System.out.printf("%nAdd another book? (y/n): %n");
@@ -70,13 +70,13 @@ public class Librarian extends Person {
         return false;
     }
 
-    private static boolean isValidSelection(int selection) {
+    private boolean isValidSelection(int selection) {
         if (selection > 0 && selection <= BOOKS.size()) { return true; }
         System.out.println("Enter a valid choice number\n");
         return false;
     }
 
-    private static void formatBookDetails(Book book) {
+    private void formatBookDetails(Book book) {
         System.out.printf("Title: %s%n", book.getTitle());
         System.out.printf("Author: %s%n", book.getAuthor());
         System.out.printf("ISBN: %s%n", book.getISBN());
@@ -84,7 +84,7 @@ public class Librarian extends Person {
         System.out.println();
     }
 
-    private static void alertNewBookAddedThenDisplayCheckoutCart(Book thisBook, List<Book> userCheckouts) {
+    private void alertNewBookAddedThenDisplayCheckoutList(Book thisBook, List<Book> userCheckouts) {
         System.out.println("\n===============");
         System.out.println("New book added!");
         System.out.println("===============");
@@ -94,7 +94,7 @@ public class Librarian extends Person {
         userCheckouts.forEach(book -> System.out.printf("%s%n", book.getTitle()));
     }
 
-    private static void alertBookRemovedThenDisplayCheckoutCart(Book thisBook, List<Book> userCheckouts) {
+    private void alertBookRemovedThenDisplayCheckoutList(Book thisBook, List<Book> userCheckouts) {
         System.out.println("\n===============");
         System.out.printf("You checked in book titled: %s%n", thisBook.getTitle());
         System.out.println("===============");
