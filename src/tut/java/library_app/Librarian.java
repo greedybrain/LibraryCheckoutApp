@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class Librarian extends Person {
-    private static final List<Book> books = Inventory.all();
+    private static final List<Book> BOOKS = Inventory.all();
 
     public Librarian(String fullName) { super(fullName); }
 
@@ -14,58 +14,28 @@ public class Librarian extends Person {
 
         while(true) {
             Inventory.showOptions();
-            var bookNumber = scanner1.nextInt();
-            if ((bookNumber < 1 || bookNumber > books.size())) {
-                System.out.println("Enter a valid choice number\n");
-                continue;
-            }
 
-            displayMoreBookDetails();
+            var selection = scanner1.nextInt();
+            if (!isValidSelection(selection)) continue;
 
             var userCheckouts = user.getCheckouts();
-            if (userCheckouts.contains(books.get(bookNumber - 1))) {
+            if (userCheckouts.contains(BOOKS.get(selection - 1))) {
                 System.out.println("You already checked that book out, try another");
                 continue;
             }
             else {
-                userCheckouts.add(books.get(--bookNumber));
-                System.out.println(userCheckouts);
+                var thisBook = BOOKS.get(--selection);
+                userCheckouts.add(thisBook);
+                alertNewBookAddedThenDisplayCheckoutCart(thisBook, userCheckouts);
             }
             if (!canCheckoutNewBook(user)) break;
-        }
-    }
-
-    private static void displayMoreBookDetails() {
-        Scanner scanner1 = new Scanner(System.in);
-        Scanner scanner2 = new Scanner(System.in);
-
-        while(true) {
-            System.out.print("Enter the number of the book you wish to see more details about: ");
-            var selection = scanner1.nextInt();
-            if (selection < 1 || selection > 10) {
-                System.out.println("Enter a valid choice number\n");
-                continue;
-            } else {
-                var book = books.get(--selection);
-                System.out.printf("Title: %s%n", book.getTitle());
-                System.out.printf("Author: %s%n", book.getAuthor());
-                System.out.printf("ISBN: %s%n", book.getISBN());
-                System.out.printf("Summary%n");
-                System.out.println("==============");
-                System.out.printf("%s%n", book.getSummary());
-                System.out.println();
-                System.out.println("View details about another? (y/n): ");
-                var decision = scanner2.nextLine().toLowerCase(Locale.ROOT);
-                if (decision.equals("y")) continue;
-                else break;
-            }
         }
     }
 
     private static boolean canCheckoutNewBook(User user) {
         Scanner scanner1 = new Scanner(System.in);
         if (user.getCheckouts().size() != 5) {
-            System.out.printf("Add another book? (y/n): %n");
+            System.out.printf("%nAdd another book? (y/n): %n");
             var decision = scanner1.nextLine().toLowerCase(Locale.ROOT);
             return decision.equals("y");
         }
@@ -73,5 +43,29 @@ public class Librarian extends Person {
         System.out.println("You've reached your limit for checkouts. Please check a book in to check out another.");
         System.out.println();
         return false;
+    }
+
+    private static boolean isValidSelection(int selection) {
+        if (selection > 0 && selection <= BOOKS.size()) { return true; }
+        System.out.println("Enter a valid choice number\n");
+        return false;
+    }
+
+    private static void formatBookDetails(Book book) {
+        System.out.printf("Title: %s%n", book.getTitle());
+        System.out.printf("Author: %s%n", book.getAuthor());
+        System.out.printf("ISBN: %s%n", book.getISBN());
+        System.out.printf("Summary - %s%n", book.getSummary());
+        System.out.println();
+    }
+
+    private static void alertNewBookAddedThenDisplayCheckoutCart(Book thisBook, List<Book> userCheckouts) {
+        System.out.println("\n===============");
+        System.out.println("New book added!");
+        System.out.println("===============");
+        formatBookDetails(thisBook);
+        System.out.println("Your Checkout List");
+        System.out.println("==================");
+        userCheckouts.forEach(book -> System.out.printf("%s%n", book.getTitle()));
     }
 }

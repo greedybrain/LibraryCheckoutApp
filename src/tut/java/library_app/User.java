@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User extends Person {
+    // Fields
     private List<Book> checkouts = new ArrayList<>();
 
-    public User(String fullName) {
-        super(fullName);
-    }
+    // Constructor
+    public User(String fullName) { super(fullName); }
 
     // getters and setters
     public String getFullName() { return fullName; }

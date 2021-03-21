@@ -13,6 +13,14 @@ public class Book {
         this.SUMMARY = summary;
     }
 
+    public static void formatBookDetails(Book book) {
+        System.out.printf("Title: %s%n", book.getTitle());
+        System.out.printf("Author: %s%n", book.getAuthor());
+        System.out.printf("ISBN: %s%n", book.getISBN());
+        System.out.printf("Summary - %s%n", book.getSummary());
+        System.out.println();
+    }
+
     // getters below
     public String getTitle() { return TITLE; }
     public String getSummary() { return SUMMARY; }
