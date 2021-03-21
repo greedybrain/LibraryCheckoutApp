@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User extends Person {
     // Fields
-    private List<Book> checkouts = new ArrayList<>();
+    private final List<Book> checkouts = new ArrayList<>();
 
     // Constructor
     public User(String fullName) { super(fullName); }
